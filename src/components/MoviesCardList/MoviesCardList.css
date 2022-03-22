@@ -7,8 +7,8 @@
 .movies__list {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 270px);
-  justify-content: flex-start;
+  grid-template-columns: repeat(auto-fill, 270px);
+  justify-content: space-between;
 
   gap: 32px 20px;
   padding: 70px 0 10px 0;

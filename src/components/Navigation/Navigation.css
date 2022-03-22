@@ -1,5 +1,5 @@
 .navigation {
-  width: 100%;
+  width: auto;
 }
 
 .navigation__menu {
@@ -183,10 +183,6 @@
 }
 
 @media screen and (max-width: 768px) {
-  .navigation {
-    width: auto;
-  }
-
   .navigation__menu {
     display: none;
   }

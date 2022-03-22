@@ -10,7 +10,6 @@ function SearchForm() {
           name="searchInput"
           className="search__input"
           placeholder="Фильм"
-          required
         />
         <button className="search__button">Найти</button>
         <div className="search__switch-box">
