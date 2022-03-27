@@ -41,6 +41,19 @@
   line-height: 10px;
 }
 
+.movies__not-found {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  margin: 70px 0 0;
+  text-align: center;
+}
+
+.movies__not-found_invisible {
+  display: none;
+}
+
+
 @media screen and (max-width: 768px) {
   .movies {
     width: calc(100% - 60px);
