@@ -48,7 +48,7 @@ class Auth {
 }
 
 const auth = new Auth({
-  url: "http://localhost:3001",
+  url: "https://api.movies.vladislav.nomoredomains.work",
   headers: {
     'Accept': 'application/json',
     "content-type": "application/json",
@@ -57,20 +57,3 @@ const auth = new Auth({
 
 export default auth;
 
-// const checkResponse = (res) => res.ok ? res.json() : res.json().then(res => Promise.reject(res));
-
-// export const register = (name, email, password) => {
-//   return fetch ('http://localhost:3001/signup', {
-//     method: 'POST',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({
-//       name,
-//       email,
-//       password
-//     })
-//   })
-//   .then(checkResponse);
-// };

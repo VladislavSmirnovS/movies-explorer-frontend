@@ -187,9 +187,11 @@ function App() {
       .getMyInfo()
       .then((res) => {
         if (res) {
+          console.log(loggedIn)
           localStorage.setItem("loggedIn", "true");
           setLoggedIn(JSON.parse(localStorage.getItem("loggedIn")));
           setCurrentUser({ name: res.name, email: res.email });
+          console.log(loggedIn)
         }
       })
       .catch((err) => {
@@ -199,7 +201,7 @@ function App() {
 
   React.useEffect(() => {
     tokenCheck();
-  }, [loggedIn]);
+  }, []);
 
   React.useEffect(() => {
     if (loggedIn) {

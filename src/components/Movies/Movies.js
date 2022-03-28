@@ -48,6 +48,7 @@ function Movies({
         onSubmit={onSubmitSearchForm}
         onHandleCheckbox={handleSwitchShortMovies}
       />
+       <Preloader isActive={isActive} />
       {!isActive && (
         <MoviesCardList
           movies={isShorted ? shortMovies : movies}

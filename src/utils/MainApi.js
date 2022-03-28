@@ -94,8 +94,8 @@ export class MainApi {
   }
   
   const mainApi = new MainApi({
-    // url: 'https://api.movies.vladislav.nomoredomains.work',
-    url: 'http://localhost:3001',
+    url: 'https://api.movies.vladislav.nomoredomains.work',
+    // url: 'http://localhost:3001',
     headers: {
       'Content-Type': 'application/json'
     }
