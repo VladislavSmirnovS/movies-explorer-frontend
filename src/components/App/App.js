@@ -158,6 +158,11 @@ function App() {
     auth.logout();
     localStorage.setItem("loggedIn", "false");
     setLoggedIn(JSON.parse(localStorage.getItem("loggedIn")));
+    localStorage.removeItem('movies');
+    setMovies([]);
+    localStorage.removeItem('savedMovies');
+    setSavedMovies([]);
+    
   }
 
   function handleUpdateUser(name, email) {
@@ -187,11 +192,9 @@ function App() {
       .getMyInfo()
       .then((res) => {
         if (res) {
-          console.log(loggedIn)
           localStorage.setItem("loggedIn", "true");
           setLoggedIn(JSON.parse(localStorage.getItem("loggedIn")));
           setCurrentUser({ name: res.name, email: res.email });
-          console.log(loggedIn)
         }
       })
       .catch((err) => {
