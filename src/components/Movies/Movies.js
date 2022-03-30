@@ -17,17 +17,18 @@ function Movies({
   notFoundMovies,
   onMovieSave,
   onMovieDelete,
+  onCheckbox,
+  shortFilms
 }) {
+
   const [shortMovies, setShortMovies] = React.useState([]);
-  const [isShorted, setIsShorted] = React.useState(false);
   const [notFoundShort, setNotFoundShort] = React.useState(false);
 
-  function handleSwitchShortMovies() {
-    setIsShorted(!isShorted);
-  }
+
+ 
 
   React.useEffect(() => {
-    if (isShorted) {
+    if (shortFilms) {
       const listShortMovies = searchShortMovies(movies);
       if (listShortMovies.length !== 0) {
         setShortMovies(listShortMovies);
@@ -37,22 +38,24 @@ function Movies({
         setNotFoundShort(true);
       }
     } else {
-      !isShorted && setNotFoundShort(false);
+      !shortFilms && setNotFoundShort(false);
     }
-  }, [movies, isShorted]);
+  }, [movies, shortFilms]);
 
   return (
     <>
       <Header loggedIn={loggedIn} />
       <SearchForm
         onSubmit={onSubmitSearchForm}
-        onHandleCheckbox={handleSwitchShortMovies}
+        onCheckbox={onCheckbox}
+        shortFilms={shortFilms}
       />
-       <Preloader isActive={isActive} />
+      <Preloader isActive={isActive} />
       {!isActive && (
         <MoviesCardList
-          movies={isShorted ? shortMovies : movies}
+          movies={shortFilms=='on' ? shortMovies : movies}
           saved={false}
+          isChecked={shortFilms}
           errorServer={errorServer}
           onMovieSave={onMovieSave}
           onMovieDelete={onMovieDelete}

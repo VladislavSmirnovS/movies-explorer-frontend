@@ -8,13 +8,12 @@ import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 import Preloader from '../Preloader/Preloader';
 
 function Login({ onLogin, serverResponse, isActive }) {
-  const {values, handleChange, errors, isValid, resetForm} = useFormWithValidation();
+  const {values, handleChange, errors, isValid} = useFormWithValidation();
 
   function handleSubmit(e) {
     const { email, password } = values;
     e.preventDefault();
     onLogin(email, password);
-    resetForm({}, {}, false);
   }
 
   return (
@@ -29,9 +28,10 @@ function Login({ onLogin, serverResponse, isActive }) {
           type="email"
           name="email"
           className="form__input"
+          pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
           required
         />
-        <span className="form__error">{errors.email}</span>
+        <span className="form__error">{errors.email ? `Введите корректный email. Пример: example@ya.ru` : ''}</span>
 
         <p className="form__input-text">Пароль</p>
         <input
@@ -41,6 +41,7 @@ function Login({ onLogin, serverResponse, isActive }) {
           type="password"
           name="password"
           className="form__input"
+          minLength='4'
           required
         />
         <span className="form__error">{errors.password}</span>

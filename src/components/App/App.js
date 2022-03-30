@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { getInitialMovies } from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
@@ -13,8 +13,11 @@ import Register from "../Register/Register";
 import Login from "../Login/Login";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import Profile from "../Profile/Profile";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 
 function App() {
+  const Checkbox = localStorage.getItem("shortFilms") === "on" ? "on" : "off";
+  const { resetForm } = useFormWithValidation();
   const [loggedIn, setLoggedIn] = React.useState(
     JSON.parse(localStorage.getItem("loggedIn"))
   );
@@ -31,6 +34,9 @@ function App() {
   const [errorServer, setErrorServer] = React.useState(false);
   const [notFoundMovies, setNotFoundMovies] = React.useState(false);
   const [notFoundSavedMovies, setNotFoundSavedMovies] = React.useState(false);
+  const [shortFilms, setShortFilms] = React.useState(Checkbox);
+  const [searchQuery, setSearchQuery] = React.useState("");
+
   const navigate = useNavigate();
 
   function handleSearchMovies(movies, word) {
@@ -55,6 +61,9 @@ function App() {
 
   function searchMovies(word) {
     setIsActivePreloader(true);
+    setSearchQuery(word);
+    localStorage.setItem("searchQuery", word);
+    localStorage.setItem("shortFilms", shortFilms);
     function filterMovies(movies) {
       const listFindMovies = handleSearchMovies(movies, word);
       if (listFindMovies.length !== 0) {
@@ -82,6 +91,11 @@ function App() {
     } else {
       filterMovies(apiMovies);
     }
+  }
+
+  function handleSwitchShortMovies(e) {
+    setShortFilms(e.target.value);
+    localStorage.setItem("shortFilms", e.target.value);
   }
 
   function handleMovieSave(movie) {
@@ -119,6 +133,7 @@ function App() {
     auth
       .loginUser(email, password)
       .then((res) => {
+        resetForm({}, {}, false);
         setIsActivePreloader(false);
         localStorage.setItem("loggedIn", "true");
         setLoggedIn(JSON.parse(localStorage.getItem("loggedIn")));
@@ -146,6 +161,7 @@ function App() {
       .then((res) => {
         setIsActivePreloader(false);
         handleLogin(email, password);
+        resetForm({}, {}, false);
       })
       .catch((err) => {
         setIsActivePreloader(false);
@@ -158,11 +174,12 @@ function App() {
     auth.logout();
     localStorage.setItem("loggedIn", "false");
     setLoggedIn(JSON.parse(localStorage.getItem("loggedIn")));
-    localStorage.removeItem('movies');
+    localStorage.removeItem("movies");
     setMovies([]);
-    localStorage.removeItem('savedMovies');
+    localStorage.removeItem("savedMovies");
+    localStorage.removeItem("searchQuery");
+    localStorage.removeItem("shortFilms");
     setSavedMovies([]);
-    
   }
 
   function handleUpdateUser(name, email) {
@@ -248,6 +265,8 @@ function App() {
                 onSubmitSearchForm={searchMovies}
                 onMovieSave={handleMovieSave}
                 onMovieDelete={handleMovieDelete}
+                onCheckbox={handleSwitchShortMovies}
+                shortFilms={shortFilms}
               />
             }
           />
@@ -261,6 +280,8 @@ function App() {
                 onMovieDelete={handleMovieDelete}
                 onSubmitSearchForm={searchMyMovies}
                 notFoundSavedMovies={notFoundSavedMovies}
+                onCheckbox={handleSwitchShortMovies}
+                shortFilms={shortFilms}
               />
             }
           />
@@ -280,23 +301,32 @@ function App() {
           <Route
             path="/signin"
             element={
-              <Login
-                onLogin={handleLogin}
-                serverResponse={loginServerResponse}
-                isActive={isActivePreloader}
-              />
+              loggedIn ? (
+                <Navigate to="/movies" replace={true} />
+              ) : (
+                <Login
+                  onLogin={handleLogin}
+                  serverResponse={loginServerResponse}
+                  isActive={isActivePreloader}
+                />
+              )
             }
           />
           <Route
             path="/signup"
             element={
-              <Register
-                onRegister={handleRegisterUser}
-                serverResponse={registerServerResponse}
-                isActive={isActivePreloader}
-              />
+              loggedIn ? (
+                <Navigate to="/movies" replace={true} />
+              ) : (
+                <Register
+                  onRegister={handleRegisterUser}
+                  serverResponse={registerServerResponse}
+                  isActive={isActivePreloader}
+                />
+              )
             }
           />
+
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>

@@ -8,13 +8,12 @@ import Preloader from "../Preloader/Preloader";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 
 function Register({ onRegister, serverResponse, isActive }) {
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const { values, handleChange, errors, isValid} = useFormWithValidation();
 
   function handleSubmit(e) {
     const { name, email, password } = values;
     e.preventDefault();
     onRegister(name, email, password);
-    resetForm({}, {}, false);
   }
 
   return (
@@ -47,8 +46,10 @@ function Register({ onRegister, serverResponse, isActive }) {
           type="email"
           name="email"
           className="form__input"
+          required
+          pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
         />
-        <span className="form__error">{errors.email}</span>
+      <span className="form__error">{errors.email ? `Введите корректный email. Пример: example@ya.ru` : ''}</span>
 
         <p className="form__input-text">Пароль</p>
         <input
@@ -58,6 +59,7 @@ function Register({ onRegister, serverResponse, isActive }) {
           type="password"
           name="password"
           className="form__input"
+          minLength="4"
           required
         />
         <span className="form__error">{errors.password}</span>
