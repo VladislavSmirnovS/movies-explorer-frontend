@@ -17,7 +17,7 @@ function Navigation(props) {
         props.pathname === "/" ? " navigation_auth-theme" : ""
       }`}
     >
-      {props.loggedIn ? (
+      {!props.loggedIn ? (
         <div>
           <Link
             to="/signup"

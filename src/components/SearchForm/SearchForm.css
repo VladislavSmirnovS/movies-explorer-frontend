@@ -1,3 +1,61 @@
+.search-form__filter{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  height: 20px;
+  width: 36px;
+  margin: 0;
+  background-color: #fff;
+  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 2px;
+  position: relative;
+  margin-right: 14px;
+}
+
+
+.search-form__radio{
+  position: absolute;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  height: 20px;
+  width: 50px;
+  opacity: 0;
+  z-index: 3;
+}
+
+.search-form__radio:hover{
+  cursor: pointer;
+}
+
+.search-form__switch{
+  box-sizing: border-box;
+  height: 16px;
+  width: 16px;
+  background-color:  #e8e8e8;
+  border-radius: 50%;
+  position: relative;
+  left: 0;
+  z-index: 2;
+  transition: transform .3s ease-in;
+}
+
+.search-form__radio:checked ~ .search-form__switch{
+  left: 0;
+}
+
+.search-form__radio ~ :checked ~ .search-form__switch{
+  left: 16px;
+  background-color: #2be080;
+}
+
+.search-form__filter .search-form__radio:checked{
+  z-index: 1;
+}
+
+
 .search {
   position: relative;
   width: calc(100% - 2 * 70px);
@@ -7,9 +65,18 @@
   border-bottom: 1px solid #e8e8e8;
 }
 
+.search__error {
+  border: none;
+  bottom: 30px;
+  left: 50%;
+  margin: 0;
+  position: absolute;
+  transform: translateX(-50%);
+}
+
 .search__form {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto auto auto;
   align-items: center;
   width: 100%;
   min-height: 72px;
@@ -127,6 +194,15 @@
     margin: 0 0 38px 0;
   }
 
+  .search__error {
+    border: none;
+    bottom: 60px;
+    left: 50%;
+    margin: 0;
+    position: absolute;
+    transform: translateX(-50%);
+  }
+
   .search__input {
     padding-left: 18px;
   }
@@ -141,6 +217,11 @@
     margin-bottom: 44px;
     grid-template-columns: 1fr 80px;
     padding-right: 19px;
+  }
+  .search__error {
+  
+    bottom: 70px;
+
   }
 
   .search__input {
@@ -175,5 +256,9 @@
     background: none;
     text-indent: 0;
     padding: 0;
+  }
+  .search__error {
+    bottom: 65px;
+    width: 160px;
   }
 }

@@ -1,5 +1,7 @@
 .navigation {
-  width: auto;
+  width: 100%;
+  display: flex;
+  justify-content: end;
 }
 
 .navigation__menu {

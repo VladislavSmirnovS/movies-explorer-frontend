@@ -1,5 +1,6 @@
 import React from "react";
 import "./Movies.css";
+import { searchShortMovies } from "../../utils/utils";
 
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -7,15 +8,60 @@ import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-import { initialMovies } from "../../utils/constant";
+function Movies({
+  movies,
+  loggedIn,
+  onSubmitSearchForm,
+  isActive,
+  errorServer,
+  notFoundMovies,
+  onMovieSave,
+  onMovieDelete,
+  onCheckbox,
+  shortFilms
+}) {
 
-function Movies() {
+  const [shortMovies, setShortMovies] = React.useState([]);
+  const [notFoundShort, setNotFoundShort] = React.useState(false);
+
+
+ 
+
+  React.useEffect(() => {
+    if (shortFilms) {
+      const listShortMovies = searchShortMovies(movies);
+      if (listShortMovies.length !== 0) {
+        setShortMovies(listShortMovies);
+        setNotFoundShort(false);
+      } else {
+        setShortMovies([]);
+        setNotFoundShort(true);
+      }
+    } else {
+      !shortFilms && setNotFoundShort(false);
+    }
+  }, [movies, shortFilms]);
+
   return (
     <>
-      <Header />
-      <SearchForm />
-      <MoviesCardList movies={initialMovies} saved={false} />
-      <Preloader />
+      <Header loggedIn={loggedIn} />
+      <SearchForm
+        onSubmit={onSubmitSearchForm}
+        onCheckbox={onCheckbox}
+        shortFilms={shortFilms}
+      />
+      <Preloader isActive={isActive} />
+      {!isActive && (
+        <MoviesCardList
+          movies={shortFilms=='on' ? shortMovies : movies}
+          saved={false}
+          isChecked={shortFilms}
+          errorServer={errorServer}
+          onMovieSave={onMovieSave}
+          onMovieDelete={onMovieDelete}
+          notFoundMovies={notFoundShort ? notFoundShort : notFoundMovies}
+        />
+      )}
       <Footer />
     </>
   );
