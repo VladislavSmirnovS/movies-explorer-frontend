@@ -38,13 +38,17 @@ function Navigation(props) {
         <nav className="navigation__movies">
             <NavLink
               to="/movies"
-              className="navigation__link"
+              className={`navigation__link ${
+                props.pathname === "/" ? "navigation__link-theme" : ""
+              }`}
             >
               Фильмы
             </NavLink>
             <NavLink
               to="/saved-movies"
-              className="navigation__link"
+              className={`navigation__link ${
+                props.pathname === "/" ? "navigation__link-theme" : ""
+              }`}
             >
               Сохранённые фильмы
             </NavLink>
@@ -52,7 +56,9 @@ function Navigation(props) {
           <nav className="navigation__profile">
             <Link
               to="/profile"
-              className="navigation__link navigation__link_text_medium navigation__link_type_account"
+              className={`navigation__link  navigation__link_text_medium navigation__link_type_account ${
+                props.pathname === "/" ? "navigation__link-theme" : "" 
+              }`}
             >
               Аккаунт
               <div className="navigation__icon">

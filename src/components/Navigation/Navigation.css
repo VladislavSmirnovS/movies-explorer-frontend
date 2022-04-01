@@ -36,6 +36,10 @@
   transition: opacity 0.3s ease-in;
 }
 
+.navigation__link-theme {
+  color: #fff;
+}
+
 .navigation__link:last-of-type {
   margin-right: 0;
 }

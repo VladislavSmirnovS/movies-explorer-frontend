@@ -2,11 +2,12 @@ import React from "react";
 import "./SearchForm.css";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 
-function SearchForm({ onSubmit, shortFilms, onCheckbox }) {
+function SearchForm({ onSubmit, shortFilms, onCheckbox, searchQuery }) {
   const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
+   
     onSubmit(values.searchInput);
   }
 
@@ -19,12 +20,12 @@ function SearchForm({ onSubmit, shortFilms, onCheckbox }) {
         onSubmit={handleSubmit}
       >
         <input
-          value={values.searchInput || ""}
+          value={values.searchInput || "" }
           onChange={handleChange}
           type="text"
           name="searchInput"
           className="search__input"
-          placeholder="Фильм"
+          placeholder={searchQuery ? searchQuery :"Фильм"}
           required
         />
         <span className="form__error search__error">
