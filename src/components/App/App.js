@@ -17,6 +17,7 @@ import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 
 function App() {
   const Checkbox = localStorage.getItem("shortFilms") === "on" ? "on" : "off";
+  const searchValue = localStorage.getItem("searchQuery");
   const { resetForm } = useFormWithValidation();
   const [loggedIn, setLoggedIn] = React.useState(
     JSON.parse(localStorage.getItem("loggedIn"))
@@ -35,7 +36,7 @@ function App() {
   const [notFoundMovies, setNotFoundMovies] = React.useState(false);
   const [notFoundSavedMovies, setNotFoundSavedMovies] = React.useState(false);
   const [shortFilms, setShortFilms] = React.useState(Checkbox);
-  const [searchQuery, setSearchQuery] = React.useState("");
+  const [searchQuery, setSearchQuery] = React.useState(searchValue);
 
   const navigate = useNavigate();
 
@@ -71,9 +72,11 @@ function App() {
         localStorage.setItem("movies", JSON.stringify(listFindMovies));
         setMovies(JSON.parse(localStorage.getItem("movies")));
         setNotFoundMovies(false);
+        console.log(notFoundMovies)
       } else {
         setIsActivePreloader(false);
         setNotFoundMovies(true);
+        console.log('1')
         setMovies([]);
       }
     }
@@ -176,6 +179,7 @@ function App() {
     setLoggedIn(JSON.parse(localStorage.getItem("loggedIn")));
     localStorage.removeItem("movies");
     setMovies([]);
+    setSearchQuery('')
     localStorage.removeItem("savedMovies");
     localStorage.removeItem("searchQuery");
     localStorage.removeItem("shortFilms");
@@ -257,6 +261,7 @@ function App() {
             element={
               <ProtectedRoute
                 component={Movies}
+                searchQuery={searchQuery}
                 loggedIn={loggedIn}
                 movies={movies}
                 isActive={isActivePreloader}

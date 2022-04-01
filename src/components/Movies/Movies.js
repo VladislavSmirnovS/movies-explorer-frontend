@@ -18,17 +18,15 @@ function Movies({
   onMovieSave,
   onMovieDelete,
   onCheckbox,
-  shortFilms
+  shortFilms,searchQuery
 }) {
 
   const [shortMovies, setShortMovies] = React.useState([]);
   const [notFoundShort, setNotFoundShort] = React.useState(false);
 
 
- 
-
   React.useEffect(() => {
-    if (shortFilms) {
+    if (shortFilms == 'on') {
       const listShortMovies = searchShortMovies(movies);
       if (listShortMovies.length !== 0) {
         setShortMovies(listShortMovies);
@@ -49,6 +47,7 @@ function Movies({
         onSubmit={onSubmitSearchForm}
         onCheckbox={onCheckbox}
         shortFilms={shortFilms}
+        searchQuery={searchQuery}
       />
       <Preloader isActive={isActive} />
       {!isActive && (
@@ -59,7 +58,7 @@ function Movies({
           errorServer={errorServer}
           onMovieSave={onMovieSave}
           onMovieDelete={onMovieDelete}
-          notFoundMovies={notFoundShort ? notFoundShort : notFoundMovies}
+          notFoundMovies={shortFilms == 'on' ? notFoundShort : notFoundMovies}
         />
       )}
       <Footer />
